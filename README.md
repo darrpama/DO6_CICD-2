@@ -1,229 +1,227 @@
 # Basic CI/CD
 
-Разработка простого **CI/CD** для проекта *SimpleBashUtils*. Сборка, тестирование, развертывание.
+Development of a simple **CI/CD** for the *SimpleBashUtils* project. Building, testing, deployment.
+
+The russian version of the task can be found in the repository.
 
 
 ## Contents
 
-1. [Chapter I](#chapter-i) \
-    1.1. [Introduction](#introduction)
+1. [Chapter I](#chapter-i)
 2. [Chapter II](#chapter-ii) \
-    2.1. [Основы CI/CD](#основы-cicd) \
-    2.2. [Основы CI](#основы-ci) \
-    2.3. [Основы CD](#основы-cd)
+    2.1. [CI/CD basics](#ci-cd-basics)  
+    2.2. [CI basics](#ci-basics)
+    2.3. [CD basics](#cd-basics)
 3. [Chapter III](#chapter-iii) \
-    3.1. [Настройка gitlab-runner](#part-1-настройка-gitlabrunner)  
-    3.2. [Сборка](#part-2-сборка)  
-    3.3. [Тест кодстайла](#part-3-тест-кодстайла)   
-    3.4. [Интеграционные тесты](#part-4-интеграционные-тесты)  
-    3.5. [Этап деплоя](#part-5-этап-деплоя)  
-    3.6. [Дополнительно. Уведомления](#part-6-дополнительно-уведомления)  
+    3.1. [Setting up the gitlab-runner](#part-1-Setting-up-the-gitlab-runner)  
+    3.2. [Building](#part-2-building)  
+    3.3. [Codestyle test](#part-3-codestyle-test)   
+    3.4. [Integration tests](#part-4-integration-tests)  
+    3.5. [Deployment stage](#part-5-deployment-stage)  
+    3.6. [Bonus. Notifications](#part-6-bonus-notifications)  
 4. [Chapter IV](#chapter-iv)
 
 
 ## Chapter I
 
-Планета Земля, Соединённое Королевство Великобритании и Северной Ирландии, Лондон, Оксфорд-стрит, офис компании “ASI”, наши дни.
+Planet Earth, United Kingdom of Great Britain and Northern Ireland, London, Oxford Street, ASI office, present day.
 
-За несколько дней после прибытия в порт Лондона вы успели обустроиться и немного осмотреть город,
-после чего наступает день, в который вы условились прибыть на новую работу.
+You have had a few days after arriving at the port of London to settle in and explore the city a little, then comes the day on which you had to go to your new job.
 
-Сегодня вы приезжаете в кэбе к дверям офиса компании, ради который вы и оказались на Альбионе.
-В полученном в день прибытия письме, были указаны код от двери, и номер Вашего кабинета.
-Удивляясь пустым коридорам и гробовой тишине, вы спускаетесь на несколько этажей вниз, где без проблем находите свое рабочее место.
+Today you arrive in a cab at the door of the company's office, for which you ended up in Albion.
+In the letter you received on the day you arrived, you were given the door code and your office number.
+Surprised by the empty corridors and the deathly silence, you descend a few floors down, where you find your workplace without any problems.
 
-Там вы обнаруживаете недавно включенный компьютер и аппарат внутренней связи в печальном состоянии.
-Стоит вам зайти и закрыть за собой дверь, из него доносится роботизированный голос.
+There you find a recently turned on computer and an intercom in a poor state.
+As you walk in and close the door behind you, a robotic voice emerges from it.
 
-`-` Добро пожаловать в компьютеризированный экспериментальный центр при лаборатории ASI.
+`-` Welcome to the ASI lab's computerised experimental center.
 
-`-` Анализ особенностей вашего организма завершен. Мы готовы приступать.
+`-` The analysis of your body's characteristics is done. We are ready to begin.
 
-`-` Вы будете заниматься сопровождением одного из проектов нашего экспериментального центра.
+`-` You will be supporting one of our experimental center projects
 
-`-` Вашим первым заданием будет создание **CI/CD** для всем знакомых утилит **cat** и **grep**.
+`-` Your first task will be to create a **CI/CD** for the well-known **cat** and **grep** utilities.
 
-`-` Перед началом работы хотим вам напомнить, что хотя основным принципом экспериментального центра является обучение в игровой форме, мы не гарантируем отсутствие увечий и травм.
+`-` Before starting, we would like to remind you that although learning through play is the main principle of the experimental center, we do not guarantee the absence of injuries and trauma.
 
-`-` Из соображений вашей безопасности и безопасности окружающих, воздержитесь дотрагиваться до *бзз* чего бы то ни было вообще.
+`-` For your own safety and the safety of others, please refrain from touching *bzzz* anything at all.
 
 
 ## Chapter II
 
-`-` Ваше первое задание требует некоторого объяснения. Позвольте я по-быстрому введу вас в курс дела.
+`-` Your first task requires some explanation. Let me give you a quick introduction.
 
-*Вы смогли разобрать лишь самую базовую информацию из дальнейшей речи, ведь она была ускорена, по ощущениям, раз в 5*
+*You were only able to make out the most basic information from the speech that followed, as it felt accelerated by five.*
 
-### Основы **CI/CD**
+###**CI/CD** basics
 
-УВЫ... Если что-то постоянно делается «в ручную» – это либо будет работать плохо, либо вовсе не будет работать.
+Sadly... If something is always done 'manually', it will either work poorly or not work at all.
 
-**CI/CD** - Это набор принципов и практик, которые позволяют чаще и надежнее развертывать изменения программного обеспечения.
+**CI/CD** is a set of principles and practices that enable more frequent and secure deployment of software changes.
 
-Причины применения **CI/CD**:
-- Командная разработка
-- Длинный жизненный цикл ПО
-- Сокращение релизного цикла
-- Сложность развертывания и тестирования крупных систем
-- Человеческий фактор
+Reasons for using **CI/CD**:
+- Team development
+- Long software life cycle
+- Shortened release cycle
+- Difficulties in deployment and testing of large systems
+- Human factor
 
-**CI/CD** pipeline - Это последовательность действий (скриптов) для определенной версии кода в репозитории,
-которая запускается автоматически при совершении изменений.
+**CI/CD** pipeline is a sequence of actions (scripts) for a particular version of the code in the repository,
+which is started automatically when changes are made.
 
-### Основы **CI**
+### **CI** basics
 
-**CI** (Continuous Integration) — в дословном переводе «непрерывная интеграция».
-Имеется в виду интеграция отдельных кусочков кода приложения между собой.
-**CI** обычно выполняет 2 задачи, описанные далее.
+**CI** (Continuous Integration) refers to the integration of individual pieces of application code with each other.
+**CI** normally performs two tasks as described below.
 
 - BUILD
-  - Проверяем, собирается ли вообще код
-  - Готовим артефакты для следующих стадий
-
+    - Checking if the code is being built at all
+    - Prepare the artifacts for the next stages
 - TEST
-  - Тесты кодстайла
-  - Модульные тесты
-  - Интеграционные тесты
-  - Прочие тесты, которые у вас есть
-  - Отчеты о тестах
+    - Codestyle tests
+    - Unit Tests
+    - Integration tests
+    - Other tests you have
+    - Test reports
 
-### Основы **CD**
+### **CD** basics
 
-**CD** (Continuous Delivery) — это расширение непрерывной интеграции,
-поскольку оно автоматически развертывает все изменения кода в тестовой и/или производственной среде после этапа сборки.
-**CD** может выполнять задачи, описанные далее.
+**CD** (Continuous Delivery) is a continuous integration extension, as it automatically deploys all code changes to the test and/or production environment after the build stage.
+**CD** can perform the following tasks.
 
-- PUBLISH (В случае применения докера для развёртывания)
-  - Собираем образы контейнеров
-  - Пушим образы туда, откуда их будем потом брать для развертывания
+- PUBLISH (If using a deployment docker)
+    - Build container images
+    - Push the images to where they will be taken from for deployment
 - UPDATE CONFIGS
-  - Обновляем конфигурацию на машинах
+    - Update configuration on the machines
 - DEPLOY STAGING
-  - Развертывание тестовой среды для ручных тестов, QA, и прочих не автоматизируемых проверок
-  - Может запускаться как вручную, так и автоматически при успешном прохождении стадий CI
+    - Deployment of test environment for manual tests, QA, and other non-automated checks
+    - Can be run manually or automatically if CI stages are passed successfully
 - DEPLOY PRODUCTION
-  - Разворачиваем новую версию системы на "продакшн"
-  - Этот этап желательно запускать вручную, а не автоматически
-  - По желанию можно настроить только для определенной ветки репозитория (master, release и т.п.)
+    - Deploying a new version of the system on 'production'
+    - This stage better be run manually rather than automatically
+    - If you want, you can set it up for a specific branch of the repository only (master, release, etc.)
 
-
-`-` Вот. Если у вас будут вопросы, прокрутите в голове на замедленной скорости то, что я сказала. Скоро вернусь.
+`-` There you go. If you have any questions, run what I said slowly through your head. I'll be right back.
 
 
 ## Chapter III
 
-В качестве результата работы вы должны сохранить два дампа образов виртуальных машин, описанных далее.
+As a result of the work you must save two dumps of the virtual machine images described below.
 
-### Part 1. Настройка **gitlab-runner**
+### Part 1. Setting up the **gitlab-runner**
 
-`-` Раз вы решили заняться CI/CD, должно быть, вы очень, очень любите тестировать. Я тоже это люблю. Так что приступим.
-Если вам потребуется какая-либо информация, рекомендую искать ответы в официальной документации.
+`-` Since you have decided to do CI/CD, you must really, really like testing. I love it too. So let's get started.
+If you need any information, I recommend looking for answers in the official documentation.
 
-**== Задание ==**
+**== Task ==**
 
-##### Поднять виртуальную машину *Ubuntu Server 20.04 LTS*
-*Будьте готовы, что в конце проекта нужно будет сохранить дамп образа виртуальной машины*
+##### Start *Ubuntu Server 20.04 LTS* virtual machine
+*Be prepared to save a dump of the virtual machine image at the end of the project*
 
-##### Скачать и установить на виртуальную машину **gitlab-runner**
+##### Download and install **gitlab-runner** on the virtual machine
 
-##### Запустить **gitlab-runner** и зарегистрировать его в текущем проекте (*DO6_CICD*)
+##### Run **gitlab-runner** and register it in the current project (*DO6_CICD*)
 
-### Part 2. Сборка
+### Part 2. Building
 
-`-` Предыдущее испытание было создано, чтобы повышать в людях уверенность в себе.
-Теперь я подкорректировала тесты, сделав их более сложными и менее льстивыми.
+`-` The previous test was designed to boost people's self-confidence.
+Now I have readjusted the tests, making them more difficult and less flattering.
 
-**== Задание ==**
+**== Task ==**
 
-#### Написать этап для **CI** по сборке приложений из проекта *C3_SimpleBashScripts*:
+#### Write a stage for **CI** to build applications from the *C3_SimpleBashScripts* project:
 
-##### В файле _gitlab-ci.yml_ добавить этап запуска сборки через мейк файл из проекта _C3_
+##### In the _gitlab-ci.yml_ file, add a stage to start the building via makefile from the _C3_ project
 
-##### Файлы, полученные после сборки (артефакты), сохранять в произвольную директорию со сроком хранения 30 дней.
+##### Save post-build files (artifacts) to a random directory with a 30-day retention period.
 
-### Part 3. Тест кодстайла
 
-`-` Поздравляю, вы выполнили абсолютно бессмысленную задачу. Шучу. Она была нужна для перехода ко всем последующим.
+### Part 3. Codestyle test
 
-**== Задание ==**
+`-` Congratulations, you've accomplished a completely pointless task. Just kidding. It was necessary for moving on to all the following ones.
 
-#### Написать этап для **CI**, который запускает скрипт кодстайла (*cpplint.py*):
+**== Task ==**
 
-##### Если кодстайл не прошел, то "зафейлить" пайплайн
+#### Write a stage for **CI** that runs a codestyle script (*cpplint.py*):
 
-##### В пайплайне отобразить вывод утилиты *cpplint.py*
+##### If the codefile didn't pass, " fail" the pipeline
 
-### Part 4. Интеграционные тесты
+##### In the pipeline, display the output of the *cpplint.py* utility
 
-`-` Отлично, тест на кодстайл написан. [ТИШЕ] Говорю с тобой тет-а-тет. Не говори ничего коллегам.
-Между нами: ты справляешься очень хорошо. [ГРОМЧЕ] Переходим к написанию интеграционных тестов.
+### Part 4. Integration tests
 
-**== Задание ==**
+`-` Great, the codestyle test is written. [WHISPERING] I'm talking to you in private. Don't tell anything to your colleagues.
+Between you and me, you're doing very well. [LOUDLY] Let's move on to writing integration tests.
 
-#### Написать этап для **CI**, который запускает ваши интеграционные тесты из того же проекта:
+**== Task ==**
 
-##### Запускать этот этап автоматически только при условии, если сборка и тест кодстайла прошли успешно
+#### Write a stage for **CI** that runs your integration tests from the same project:
 
-##### Если тесты не прошли, то "зафейлить" пайплайн
+##### Run this stage automatically only if the build and codestyle test passes successfully
 
-##### В пайплайне отобразить вывод, что интеграционные тесты успешно прошли / провалились
+##### If tests didn't pass, fail the pipeline
 
-### Part 5. Этап деплоя
+##### In the pipeline, display the output of the succeeded / failed integration tests
 
-`-` Для завершения этого задания вы должны перенести исполняемые файлы на другую виртуальную машину, которая будет играть роль продакшена. Удачи.
+### Part 5. Deployment stage
 
-**== Задание ==**
+`-` To complete this task, you must move the executable files to another virtual machine, which will play the role of a production. Good luck.
 
-##### Поднять вторую виртуальную машину *Ubuntu Server 20.04 LTS*
+**== Task ==**
 
-#### Написать этап для **CD**, который "разворачивает" проект на другой виртуальной машине:
+##### Start the second virtual machine *Ubuntu Server 20.04 LTS*
 
-##### Запускать этот этап вручную при условии, что все предыдущие этапы прошли успешно
+#### Write a stage for **CD** that "deploys" the project on another virtual machine:
 
-##### Написать bash-скрипт, который при помощи **ssh** и **scp** копирует файлы, полученные после сборки (артефакты), в директорию */usr/local/bin* второй виртуальной машины
-*Тут вам могут помочь знания, полученные в проекте DO2_LinuxNetwork*
+##### Run this stage manually, if all the previous stages have passed successfully
 
-- Будьте готовы объяснить по скрипту, как происходит перенос.
+##### Write a bash script which copies the files received after the building (artifacts) into the */usr/local/bin* directory of the second virtual machine using **ssh** and **scp**
 
-##### В файле _gitlab-ci.yml_ добавить этап запуска написанного скрипта
+*Here the knowledge gained from the DO2_LinuxNetwork project can help you*
 
-##### В случае ошибки "зафейлить" пайплайн
+- Be prepared to explain from the script how the relocation occurs.
 
-В результате вы должны получить готовые к работе приложения из проекта *C3_SimpleBashScripts* (s21_cat и s21_grep) на второй виртуальной машине.
+##### In the _gitlab-ci.yml_ file, add a stage to run the script you have written
 
-##### Сохранить дампы образов виртуальных машин
+##### In case of an error, fail the pipeline
 
-### Part 6. Дополнительно. Уведомления
+As a result, you should have applications from the *C3_SimpleBashScripts* (s21_cat and s21_grep) project ready to run on the second virtual machine.
 
-`-` Здесь написано, что ваше следующее задание выполняется специально для нобелевских лауреатов.
-Здесь не сказано, за что они получили премию, но точно не за умение работать с **gitlab-runner**.
+##### Save dumps of virtual machine images
 
-**== Задание ==**
+### Part 6. Bonus. Notifications
 
-##### Настроить уведомления о успешном/неуспешном выполнении пайплайна через бота с именем "[ваш nickname] DO6 CI/CD" в *Telegramm*
+`-` It says that your next task is for Nobel laureates specially.
+It does not say what they won the prize for, but certainly not for their ability to work with **gitlab-runner**.
 
-- Текст уведомления должен содержать информацию об успешности прохождения как этапа **CI**, так и этапа **CD**.
-- В остальном текст уведомления может быть произвольным.
+**== Task ==**
+
+##### Set up notifications of successful/unsuccessful pipeline execution via bot named "[your nickname] DO6 CI/CD" in *Telegram*
+- The text of the notification must contain information on the successful passing of both **CI** and **CD** stages.
+- The rest of the notification text may be arbitrary.
 
 
 ## Chapter IV
 
-`-` Хорошо. По завершении серии заданий сотруднику следует пройти в комнату отдыха.
+`-` Good. After completing a series of tasks, the employee should go to the break room.
 
-Пока у вас выдалась свободная минута в комнате отдыха вы, попутно размышляя о странности происходящего, решаете проверить почту.
+While you have a free moment in the break room you decide to check your mail, thinking about the weirdness of what is going on.
 
-Не успели вы достать телефон, как в комнату отдыха зашёл ещё один человек.
 
-`-` Привет, что-то я тебя тут раньше не видел.
+Just before you get your phone out, another person walks into the break room.
 
-`-` Было бы странно, если бы видел. Я тут первый день, хах.
+`-` Hi, haven't seen you here before.
 
-`-` О, первый день! Ну и как тебе наш "босс"? - последние слова прозвучали с явной усмешкой
+`-` That would be strange if you had. It's my first day here, huh.
 
-`-` Это был босс? Фух, всё-таки он не одному мне кажется странным... и слегка грубым? Я уж думал, что вы все в Англии такие.
+`-`Oh, first day! So, what do you think of our "boss"? - the last words were spoken with an obvious grin
 
-`-` Ахах, ни в коем случае, друг. Это просто розыгрыш над новичками, но не волнуйся завтра всё будет в порядке. Кстати говоря, вон идет и настоящий босс, кажется к тебе. Ну удачи, свидимся еще.
+`-` That was the boss? Phew, I'm not the only one who thinks he's weird... and a bit rude? I thought you were all like that in England.
 
-Незнакомец быстро пропал и в комнату зашел невысокий мужчина в дорогом костюме, с небольшой залысиной, навскидку лет этак 50-60-ти. Не дожидаясь ваших слов, он с тонкой, едва уловимой, улыбкой произнес:
+`-` Haha, definitely not, mate. It's just a prank on the newbies, but don't worry everything will be fine tomorrow. By the way, here comes the real boss, looks like he's coming your way. Well, good luck, see you later.
 
-`-` Ах, Томас, видимо это вы. Поистине великолепное выполнение тестовой работы. Надеюсь вы не испугались нашей милой подруги ASI младшей, она высоко отозвалась о вас. Итак, позвольте мне подробнее рассказать чем мы тут вообще занимаемся и какова ваша роль в нашей компании...
+The stranger quickly disappeared and a short man in an expensive suit, with a slight baldness, in his early fifties or sixties, entered the room. Without waiting for you to speak, he said with a subtle, barely noticeable smile:
+
+`-` Oh, you must be Thomas. Truly magnificent performance of the test work. I hope you weren't intimidated by our lovely friend ASI Junior, she spoke highly of you. So, let me tell you more about what we do here in general and what is your role in our company...
