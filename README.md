@@ -10,10 +10,10 @@ The russian version of the task can be found in the repository.
 1. [Chapter I](#chapter-i)
 2. [Chapter II](#chapter-ii) \
     2.1. [CI/CD basics](#ci-cd-basics)  
-    2.2. [CI basics](#ci-basics)
+    2.2. [CI basics](#ci-basics)  
     2.3. [CD basics](#cd-basics)
 3. [Chapter III](#chapter-iii) \
-    3.1. [Setting up the gitlab-runner](#part-1-Setting-up-the-gitlab-runner)  
+    3.1. [Setting up the gitlab-runner](#part-1-setting-up-the-gitlab-runner)  
     3.2. [Building](#part-2-building)  
     3.3. [Codestyle test](#part-3-codestyle-test)   
     3.4. [Integration tests](#part-4-integration-tests)  
@@ -54,7 +54,7 @@ As you walk in and close the door behind you, a robotic voice emerges from it.
 
 *You were only able to make out the most basic information from the speech that followed, as it felt accelerated by five.*
 
-###**CI/CD** basics
+### **CI/CD** basics
 
 Sadly... If something is always done 'manually', it will either work poorly or not work at all.
 
@@ -122,7 +122,8 @@ If you need any information, I recommend looking for answers in the official doc
 
 ##### Download and install **gitlab-runner** on the virtual machine
 
-##### Run **gitlab-runner** and register it in the current project (*DO6_CICD*)
+##### Run **gitlab-runner** and register it for use in the current project (*DO6_CICD*)
+- You will need a URL and a token for runner registration, that can be obtained from the task page on the platform.
 
 ### Part 2. Building
 
@@ -190,6 +191,7 @@ Between you and me, you're doing very well. [LOUDLY] Let's move on to writing in
 As a result, you should have applications from the *C3_SimpleBashScripts* (s21_cat and s21_grep) project ready to run on the second virtual machine.
 
 ##### Save dumps of virtual machine images
+- Don't forget to run the pipeline with the last commit in the repository.
 
 ### Part 6. Bonus. Notifications
 
