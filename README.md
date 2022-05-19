@@ -113,7 +113,8 @@ which is started automatically when changes are made.
 
 ## Chapter III
 
-As a result of the work you must save two dumps of the virtual machine images described below.
+As a result of the work you must save two dumps of the virtual machine images described below. \
+**p.s. Do not upload dumps to git under any circumstances!**
 
 ### Part 1. Setting up the **gitlab-runner**
 
@@ -196,6 +197,7 @@ Between you and me, you're doing very well. [LOUDLY] Let's move on to writing in
 As a result, you should have applications from the *C3_SimpleBashScripts* (s21_cat and s21_grep) project ready to run on the second virtual machine.
 
 ##### Save dumps of virtual machine images
+**p.s. Do not upload dumps to git under any circumstances!**
 - Don't forget to run the pipeline with the last commit in the repository.
 
 ### Part 6. Bonus. Notifications
