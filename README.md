@@ -151,11 +151,11 @@ Now I have readjusted the tests, making them more difficult and less flattering.
 
 **== Task ==**
 
-#### Write a stage for **CI** that runs a codestyle script (*cpplint.py*):
+#### Write a stage for **CI** that runs a codestyle script (*clang-format*):
 
 ##### If the codefile didn't pass, " fail" the pipeline
 
-##### In the pipeline, display the output of the *cpplint.py* utility
+##### In the pipeline, display the output of the *clang-format* utility
 
 ### Part 4. Integration tests
 
