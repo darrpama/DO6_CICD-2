@@ -135,7 +135,7 @@ Now I have readjusted the tests, making them more difficult and less flattering.
 
 **== Task ==**
 
-#### Write a stage for **CI** to build applications from the *C2_SimpleBashScripts* project:
+#### Write a stage for **CI** to build applications from the *C2_SimpleBashUtils* project:
 
 ##### In the _gitlab-ci.yml_ file, add a stage to start the building via makefile from the _C2_ project
 
@@ -191,7 +191,7 @@ Between you and me, you're doing very well. [LOUDLY] Let's move on to writing in
 
 ##### In case of an error, fail the pipeline
 
-As a result, you should have applications from the *C2_SimpleBashScripts* (s21_cat and s21_grep) project ready to run on the second virtual machine.
+As a result, you should have applications from the *C2_SimpleBashUtils* (s21_cat and s21_grep) project ready to run on the second virtual machine.
 
 ##### Save dumps of virtual machine images
 **p.s. Do not upload dumps to git under any circumstances!**
