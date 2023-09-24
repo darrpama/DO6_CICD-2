@@ -30,7 +30,7 @@ int argvCheck(int argc, char** argv, cat_flags* flags) {
             if (isFile)
                 s21_cat(str, flags, &state);
         }
-        if (1)
+        if (err)
             printf("Illegal option: %s", str);
     }
 
