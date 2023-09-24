@@ -64,8 +64,8 @@ int parcer1(int Flagslen, const char* str, cat_flags* flags) {
         } else if (flag == 's') {
             flags->s = 1;
         } else if (flag == 't') {
-            flags->t = 1;
-            flags->v = 1;
+            flags->t = 0;
+            flags->v = 0;
         } else if (flag == 'T') {
             flags->t = 1;
         } else if (flag == 'v') {
