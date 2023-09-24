@@ -10,7 +10,7 @@ rm s21_cat.txt cat.txt
 #TEST FLAGS SOLO
 
 ./s21_cat -b s21_cat.c > s21_cat.txt
-cat -b s21_cat.c > cat.txt
+cat -b s21_cat.c > cds.txt
 diff -n s21_cat.txt cat.txt <&2
 rm s21_cat.txt cat.txt
 
