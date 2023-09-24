@@ -39,8 +39,10 @@ deploy-code-job:
   stage: deploy
   when: manual
   script:
-    - scp src/cat/s21_cat darrpama@192.168.100.101:/usr/local/bin
-    - scp src/grep/s21_grep darrpama@192.168.100.101:/usr/local/bin
+    - scp src/cat/s21_cat darrpama@192.168.100.101:~
+    - scp src/grep/s21_grep darrpama@192.168.100.101:~
+    - ssh darrpama@192.168.100.101 cp ~/s21_cat /usr/local/bin
+    - ssh darrpama@192.168.100.101 cp ~/s21_grep /usr/local/bin
   allow_failure: false
   after_script:
     - chmod +x notifications.sh && bash notifications.sh
