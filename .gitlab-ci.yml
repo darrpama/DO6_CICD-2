@@ -1,0 +1,46 @@
+stages:
+  - build
+  - style
+  - test
+  - deploy
+
+
+build-code-job:
+  stage: build
+  script:
+    - cd src/cat && make s21_cat
+    - cd ../../src/grep && make s21_grep
+  artifacts:
+    paths:
+      - src/cat/s21_cat
+      - src/grep/s21_grep
+    expire_in: 30 days
+  after_script:
+    - chmod +x notifications.sh && bash notifications.sh
+    
+style-code-job:
+  stage: style
+  script:
+    - cd src/cat && make style
+    - cd ../../src/grep && make style
+  after_script:
+    - chmod +x notifications.sh && bash notifications.sh
+
+test-code-job:
+  stage: test
+  script:
+    - cd src/cat && make test
+    - cd ../../src/grep && make test
+  when: on_success
+  after_script:
+    - chmod +x notifications.sh && bash notifications.sh
+
+deploy-code-job:
+  stage: deploy
+  when: manual
+  script:
+    - scp src/cat/s21_cat darrpama@192.168.100.101:/usr/local/bin
+    - scp src/grep/s21_grep darrpama@192.168.100.101:/usr/local/bin
+  allow_failure: false
+  after_script:
+    - chmod +x notifications.sh && bash notifications.sh
