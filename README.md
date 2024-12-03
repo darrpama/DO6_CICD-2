@@ -40,11 +40,10 @@
 ![p1t9](images/p1t9.png "Процесс обновления")
 
 Нашёл на странице с заданием URL и токен для регистрации.
-![p1t5](images/p1t5.png "Информация для регистрации")
 
 В документации `https://docs.gitlab.com/runner/commands/` нашёл раздел, описывающий команды для регистрации.
 Пробую интерактивную регистрацию:
-`gitlab-runner register --name my-runner --url "https://repos.21-school.ru" --registration-token SBsAvgJ3k_cb6FpzZyqr`
+`gitlab-runner register --name my-runner --url "https://repos.21-school.ru" --registration-token *************`
 
 ![p1t6](images/p1t6.png "Процесс регистрации")
 ![p1t7](images/p1t7.png "Registration complete")
